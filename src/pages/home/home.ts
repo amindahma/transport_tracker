@@ -2,8 +2,10 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
-declare var google:any;
+import { MqttConnection } from '../../module/demo.module';
+import { Subscription } from "rxjs";
 
+declare var google:any;
 
 @Component({
   selector: 'page-home',
@@ -18,7 +20,10 @@ export class HomePage {
 
   @ViewChild('map') mapRef:ElementRef;
   
-  constructor(public navCtrl: NavController, public geo: Geolocation) {
+  constructor(public navCtrl: NavController, public geo: Geolocation, private _mqttconnection: MqttConnection) {
+   
+    
+   
 
   }
 
@@ -53,14 +58,6 @@ export class HomePage {
       infoWindow.open(map, marker);
 
     }).catch( err => console.log(err));
-
-    let watch = this.geo.watchPosition();
-    watch.subscribe((data) => {
-      let location = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
-      this.map.setZoom(13);      // This will trigger a zoom_changed on the map
-      this.map.setCenter(location);
-      this.updateMarker(location, this.marker);
-    });
 
   }
 
