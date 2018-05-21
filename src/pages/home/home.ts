@@ -21,7 +21,6 @@ export class HomePage {
   @ViewChild('map') mapRef:ElementRef;
   
   constructor(public navCtrl: NavController, public geo: Geolocation, private _mqttconnection: MqttConnection) {
-
   }
 
   ionViewDidLoad() {
@@ -29,6 +28,16 @@ export class HomePage {
   }
 
   DisplayMap() {
+
+    let location = new google.maps.LatLng(7.710224,80.6567713);
+    let options = {
+      center:location,
+      zoom:7,
+      streetViewControl:false,
+      mapTypeId:'roadmap'
+    };
+    var map = new google.maps.Map(this.mapRef.nativeElement, options);
+
 
     this.geo.getCurrentPosition().then( pos => {
       
