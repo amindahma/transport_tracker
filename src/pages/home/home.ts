@@ -21,9 +21,6 @@ export class HomePage {
   @ViewChild('map') mapRef:ElementRef;
   
   constructor(public navCtrl: NavController, public geo: Geolocation, private _mqttconnection: MqttConnection) {
-   
-    
-   
 
   }
 
@@ -58,6 +55,14 @@ export class HomePage {
       infoWindow.open(map, marker);
 
     }).catch( err => console.log(err));
+
+    let watch = this.geo.watchPosition();
+    watch.subscribe((data) => {
+      let location = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
+      this.map.setZoom(13);      // This will trigger a zoom_changed on the map
+      this.map.setCenter(location);
+      this.updateMarker(location, this.marker);
+    });
 
   }
 
