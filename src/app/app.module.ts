@@ -10,6 +10,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { MqttConnection } from '../module/demo.module';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -29,6 +32,7 @@ import { Geolocation } from '@ionic-native/geolocation';
   providers: [
     StatusBar,
     SplashScreen,
+    MqttConnection,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
