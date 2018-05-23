@@ -68,6 +68,7 @@ export class HomePage {
 
     let watch = this.geo.watchPosition();
     watch.subscribe((data) => {
+      // this._mqttconnection.sendMessage(data.coords.latitude,data.coords.longitude)
       let location = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
       this.map.setZoom(13);      // This will trigger a zoom_changed on the map
       this.map.setCenter(location);

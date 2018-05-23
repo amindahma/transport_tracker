@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { MapPage } from '../map/map';
 import { ApiProvider } from '../../providers/api/api';
+import { elementAt } from 'rxjs/operator/elementAt';
 
 @Component({
   selector: 'page-list',
@@ -15,7 +16,7 @@ export class ListPage {
   items_original:any;
   icons: string[];
   items: Array<{routeNo: string, name: string, id: string}>;
-  bus_items: Array<{icon: string, busNo: string, name: string, route_id: string}>;
+  bus_items: Array<{icon: string, busNo: string, name: string, route_id: string, username: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -77,7 +78,8 @@ export class ListPage {
           icon: icon,
           busNo: element.busNo,
           name: element.name,
-          route_id: element.route_id
+          route_id: element.route_id,
+          username: element.username
         });
       });
     }, err => {
@@ -88,8 +90,16 @@ export class ListPage {
   busTapped(event, item) {
     this.apiProvider.getCordinateList(item.route_id).subscribe(res => {
       console.log(res.json());
+      // res.json().forEach(element => {
+      //   console.log(element);
+      //   var flightPlanCoordinates = [];
+      //   flightPlanCoordinates.push({
+          
+      //   });
+      // });
       this.navCtrl.push(MapPage, {
-        item: res.json()
+        flightPlanCoordinates: res.json(),
+        username: item.username
       });
     }, err => {
     });

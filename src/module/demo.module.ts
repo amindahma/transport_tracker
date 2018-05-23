@@ -40,11 +40,11 @@ constructor() {
     this.connect = true;
     // this.client.subscribe("nCinga/Line"+this.line);
     // this.client.subscribe("Mobile/Line"+this.line);
-    this.sendMessage('start');
+    // this.sendMessage('start');
   }
 
-    sendMessage(message: string) {
-    let packet = new Paho.MQTT.Message(message);
+    sendMessage(lat: any, lng: any) {
+    let packet = new Paho.MQTT.Message(lat+","+lng);
     packet.destinationName = "test";
     this.client.send(packet);
   }

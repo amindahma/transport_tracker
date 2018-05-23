@@ -20,10 +20,12 @@ export class MapPage {
   lng: any;
   map:any;
   marker: any;
+  flightPlanCoordinates: any;
 
   @ViewChild('map') mapRef:ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.flightPlanCoordinates = navParams.get('flightPlanCoordinates');
   }
 
 
@@ -41,6 +43,22 @@ export class MapPage {
       mapTypeId:'roadmap'
     };
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+    var flightPath = new google.maps.Polyline({
+      path: this.flightPlanCoordinates,
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    flightPath.setMap(this.map);
+
+    var bounds = new google.maps.LatLngBounds();
+    console.log(this.flightPlanCoordinates[0])
+    bounds.extend(new google.maps.LatLng(this.flightPlanCoordinates[0].lat, this.flightPlanCoordinates[0].lng));
+    bounds.extend(new google.maps.LatLng(this.flightPlanCoordinates[this.flightPlanCoordinates.length-1].lat, this.flightPlanCoordinates[this.flightPlanCoordinates.length-1].lng));
+    this.map.fitBounds(bounds);
 
   //   this.geo.getCurrentPosition().then( pos => {
       
