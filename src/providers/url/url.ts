@@ -14,9 +14,10 @@ export class UrlProvider {
     console.log('Hello UrlProvider Provider');
   }
 
-  static IP_ADDRESS="http://167.99.195.237/bus_tracker_server/web/app_dev.php/api/";
-  static BUS_ROUTES="route/list";
-  static BUS_LIST="bus/list";
-  static CORDINATE_LIST="coordinate/list";
+  static IP_ADDRESS="http://167.99.195.237/bus_tracker_server/web/app_dev.php/";
+  static BUS_ROUTES="api/route/list";
+  static BUS_LIST="api/bus/list";
+  static CORDINATE_LIST="api/coordinate/list";
+  static AUTHENTICATE="driver/api/login";
 
 }

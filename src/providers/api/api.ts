@@ -40,5 +40,13 @@ export class ApiProvider {
     body.append('route_id',route);
     return this.http.post(url,body);  
   }
+  authenticate(username, password) {
+    // let access_token=localStorage.getItem('access_token');
+    let url = UrlProvider.IP_ADDRESS + UrlProvider.AUTHENTICATE ;
+    let body = new FormData();
+    body.append('username',username);
+    body.append('password',password);
+    return this.http.post(url,body);  
+  }
  
 }

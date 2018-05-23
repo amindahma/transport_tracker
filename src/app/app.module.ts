@@ -6,6 +6,10 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
+import { SignInPage } from '../pages/sign-in/sign-in';
+import { TrainPage } from '../pages/train/train';
+import { StaffPage } from '../pages/staff/staff';
+import { SchoolPage } from '../pages/school/school';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -15,6 +19,7 @@ import { MqttConnection } from '../module/demo.module';
 import { UrlProvider } from '../providers/url/url';
 import { ApiProvider } from '../providers/api/api';
 import { HttpModule } from '@angular/http';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 @NgModule({
@@ -22,7 +27,11 @@ import { HttpModule } from '@angular/http';
     MyApp,
     HomePage,
     ListPage,
-    MapPage
+    MapPage,
+    SignInPage,
+    TrainPage,
+    StaffPage,
+    SchoolPage
   ],
   imports: [
     BrowserModule,
@@ -35,13 +44,18 @@ import { HttpModule } from '@angular/http';
     MyApp,
     HomePage,
     ListPage,
-    MapPage
+    MapPage,
+    SignInPage,
+    TrainPage,
+    StaffPage,
+    SchoolPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     MqttConnection,
     Geolocation,
+    NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UrlProvider,
     ApiProvider
