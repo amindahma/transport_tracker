@@ -3,21 +3,37 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Bus Locations</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+  <ion-searchbar placeholder="Search Route" showCancelButton=true animated=true (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-scroll scrollY="true" id="route-list">
+    <ion-list>
+      <ion-item> 
+        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+          <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
+          <div width-30 item-start>
+              {{item.routeNo}}
+          </div>
+          <div class="item-note">
+            {{item.name}}
+          </div>
+        </button>
+      </ion-item> 
+    </ion-list>
+  </ion-scroll>
+  <h5 *ngIf="selectedItem" padding>Select bus from route <b>{{selectedItem.title}}</b></h5>
+  <ion-scroll scrollY="true" id="bus-list" *ngIf="selectedItem">
+    <ion-list>
+      <button ion-item *ngFor="let item of bus_items" (click)="busTapped($event, item)">
+        <ion-icon [name]="item.icon" item-start></ion-icon>
+        {{item.busNo}}
+        <div class="item-note" item-end>
+          {{item.name}}
+        </div>
+      </button>
+    </ion-list>
+  </ion-scroll>
 </ion-content>

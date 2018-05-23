@@ -21,6 +21,7 @@ export class HomePage {
   @ViewChild('map') mapRef:ElementRef;
   
   constructor(public navCtrl: NavController, public geo: Geolocation, private _mqttconnection: MqttConnection) {
+    
   }
 
   ionViewDidLoad() {
