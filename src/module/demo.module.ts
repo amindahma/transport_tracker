@@ -6,6 +6,7 @@ import { ErrorHandler } from '@angular/core';
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { Geolocation } from '@ionic-native/geolocation';
 @Injectable()
 
 
@@ -19,21 +20,36 @@ export class MqttConnection {
     server: string;
     epfid: string;
     line:number=1;
+    geo:any;
+    topic: string;
 
     
 
-constructor() {
-  this.epfid="ionicTest";
-  this.server="167.99.195.237";
-  this.client = new Paho.MQTT.Client(this.server, 8083, this.epfid);
+  constructor(public username: String) {
+    this.epfid = username + "_device";
+    this.topic = username +"/PUB"
+    this.server="167.99.195.237";
+    this.client = new Paho.MQTT.Client(this.server, 8083, this.epfid);
+    this.onMessage();
+    this.onConnectionLost();
+    this.client.connect({onSuccess: this.onConnected.bind(this)});
 
-  this.onMessage();
-  this.onConnectionLost();
-  this.client.connect({onSuccess: this.onConnected.bind(this)});
+    
+
+    this.geo =new Geolocation();
+
+    this.geo.getCurrentPosition().then( data => {
+      this.sendMessage(data.coords.latitude,data.coords.longitude);
+      console.log(data)
+    }).catch( err => console.log(err));
+    
+    let watch = this.geo.watchPosition();
+    watch.subscribe((data) => {
+      console.log(data)
+      this.sendMessage(data.coords.latitude,data.coords.longitude);
+    });
+
   }
-
-
-
 
   onConnected() {
     console.log("Connected");
@@ -41,11 +57,12 @@ constructor() {
     // this.client.subscribe("nCinga/Line"+this.line);
     // this.client.subscribe("Mobile/Line"+this.line);
     // this.sendMessage('start');
+    // this.sendMessage(12.3, 6.3);
   }
 
     sendMessage(lat: any, lng: any) {
     let packet = new Paho.MQTT.Message(lat+","+lng);
-    packet.destinationName = "test";
+    packet.destinationName = this.topic;
     this.client.send(packet);
   }
   //   sendMessageBA(message: string) {
@@ -75,5 +92,9 @@ constructor() {
       console.log('Connection lost : ' + JSON.stringify(responseObject));
       this.connect = false;
     };
+  }
+
+  stop(){
+    this.client.disconnect();
   }
 }

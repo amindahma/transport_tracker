@@ -5,4 +5,12 @@ page-list {
     #bus-list {
         height: 30%;
     }
+    .search-bar {
+        border-radius: 30px !important;
+        margin-bottom: 5px;
+    }
+    .bus-name {
+        align-items: center;
+        text-align: center;
+    }
 }
