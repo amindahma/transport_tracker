@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { MqttSubscriber } from '../../module/sub.module.';
 
 import { Paho } from 'ng2-mqtt/mqttws31';
 // import { HomePage} from '../pages/home/home';
@@ -10,6 +9,7 @@ import { ErrorHandler } from '@angular/core';
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { BackgroundMode } from '@ionic-native/background-mode';
 // import { Geolocation } from '@ionic-native/geolocation';
 // import { MapPage } from '../pages/map/map';
 
@@ -49,13 +49,23 @@ export class MapPage {
   // geo:any;
   topic: string;
 
+  numDeltas = 100;
+  delay =2; //milliseconds
+  i = 0;
+  deltaLat;
+  deltaLng;
+  lastLat= 0.0;
+  lastLng= 0.0;
+
   @ViewChild('map') mapRef:ElementRef;
 
   items: Array<{username: string, map: any, marker: any}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private backgroundMode: BackgroundMode) {
     this.flightPlanCoordinates = navParams.get('flightPlanCoordinates');
     this.username = navParams.get('username');
+    this.backgroundMode.enable();
+    // this.backgroundMode.moveToBackground();
   }
 
 
@@ -91,7 +101,7 @@ export class MapPage {
     flightPath.setMap(this.map);
 
     var bounds = new google.maps.LatLngBounds();
-    console.log(this.flightPlanCoordinates[0])
+    // console.log(this.flightPlanCoordinates[0])
     bounds.extend(new google.maps.LatLng(this.flightPlanCoordinates[0].lat, this.flightPlanCoordinates[0].lng));
     bounds.extend(new google.maps.LatLng(this.flightPlanCoordinates[this.flightPlanCoordinates.length-1].lat, this.flightPlanCoordinates[this.flightPlanCoordinates.length-1].lng));
     this.map.fitBounds(bounds);
@@ -110,11 +120,11 @@ export class MapPage {
   //     var map = new google.maps.Map(this.mapRef.nativeElement, options);
   //     this.map = map
       var loc = new google.maps.LatLng(0,0);
-      var marker =  new google.maps.Marker({
+      this.marker =  new google.maps.Marker({
         loc,
         map
       });
-      this.marker = marker;
+      // this.marker = marker;
   //     var infoWindow = new google.maps.InfoWindow({content: "You are Here!"});
   //     google.maps.event.addListener(marker, 'click', function () {
   //       infoWindow.open(map, marker);
@@ -157,11 +167,14 @@ export class MapPage {
     this.client.onMessageArrived = (message: Paho.MQTT.Message) => {
     this.newMessage =message.payloadString; 
     console.log('Message arriveddd : ' + message.payloadString);
-    console.log(message.destinationName);
+    // console.log(message.destinationName);
     var splitted = this.newMessage.split(",",2);
-    console.log(splitted);
+    // console.log(splitted);
     var loc = new google.maps.LatLng(parseFloat(splitted[0]),parseFloat(splitted[1]));
+    // console.log(this.marker);
+    // this.transition(parseFloat(splitted[0]),parseFloat(splitted[1]), this.marker);
     this.updateMarker(loc);
+    // if(message.destinationName=="Mobile
     // if(message.destinationName=="Mobile/Line"+this.line){
     //   this.subject1.next(message.payloadString)
     // }
@@ -184,5 +197,25 @@ export class MapPage {
     console.log(position);
     this.marker.setPosition(position);
   }
+
+
+  transition(newLat, newLng, marker){
+      this.i = 0;
+      this.deltaLat = (newLat - this.lastLat)/this.numDeltas;
+      this.deltaLng = (newLng - this.lastLng)/this.numDeltas;
+      this.moveMarker(marker);
+  }
+
+  moveMarker(marker){
+      this.lastLat += this.deltaLat;
+      this.lastLng += this.deltaLng;
+      var latlng = new google.maps.LatLng(this.lastLat, this.lastLng);
+      console.log(this.lastLat);
+      marker.setPosition(latlng);
+      if(this.i!=this.numDeltas){
+          this.i++;
+          setTimeout(this.moveMarker(marker), this.delay);
+      }
+  } 
 
 }

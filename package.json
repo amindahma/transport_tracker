@@ -21,6 +21,7 @@
     "@angular/http": "5.2.10",
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
+    "@ionic-native/background-mode": "^4.7.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/native-storage": "^4.7.0",
@@ -30,6 +31,7 @@
     "angular2-mqtt": "^1.7.1",
     "cordova-android": "7.0.0",
     "cordova-browser": "5.0.3",
+    "cordova-plugin-background-mode": "^0.7.2",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
@@ -59,7 +61,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-nativestorage": {}
+      "cordova-plugin-nativestorage": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "android",
