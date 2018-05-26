@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { BusPage } from '../pages/bus/bus';
 import { MapPage } from '../pages/map/map';
 import { SignInPage } from '../pages/sign-in/sign-in';
 import { TrainPage } from '../pages/train/train';
@@ -27,6 +28,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     MyApp,
     HomePage,
     ListPage,
+    BusPage,
     MapPage,
     SignInPage,
     TrainPage,
@@ -44,6 +46,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     MyApp,
     HomePage,
     ListPage,
+    BusPage,
     MapPage,
     SignInPage,
     TrainPage,

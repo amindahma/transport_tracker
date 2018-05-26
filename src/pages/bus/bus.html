@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar class="navbar-class">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bus Locations</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="page-background">
+  <!-- <ion-searchbar class="search-bar" placeholder="Search Route" showCancelButton=true animated=true (ionInput)="getItems($event)"></ion-searchbar> -->
+  
+  <!-- <h5 *ngIf="selectedItem" padding>Select bus from route <b>{{selectedItem.title}}</b></h5> -->
+  <ion-scroll scrollY="true" id="bus-list">
+    <ion-list>
+      <button ion-item *ngFor="let item of bus_items" (click)="busTapped($event, item)">
+        <ion-icon [name]="item.icon" item-start></ion-icon>
+        {{item.busNo}}
+        <div class="item-note" item-end >
+          {{item.name}}
+        </div>
+      </button>
+    </ion-list>
+  </ion-scroll>
+</ion-content>

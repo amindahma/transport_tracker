@@ -1,0 +1,31 @@
+page-bus {
+
+    #bus-list {
+        height: 90%;
+    }
+    // .search-bar {
+    //     margin-bottom: 5px;
+    // }
+    // .bus-name {
+    //     align-items: center;
+    //     text-align: center;
+    // }
+
+    // ion-searchbar{        
+    //     .searchbar-input-container{            
+    //         .searchbar-input{
+    //             border-radius: 20px;
+    //         }
+    //     }
+    // }
+
+    ion-list{      
+        .item-block{
+            border-radius: 20px;
+            height: 80%;
+        }
+    }  
+         
+
+
+}
