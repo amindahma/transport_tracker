@@ -8,23 +8,23 @@
   <ion-content color="dark">
     <ion-list>
       <button menuClose ion-item (click)="openHomePage()">
-          <ion-icon name="home" item-start></ion-icon>
+          <ion-icon name="ios-home-outline" color="primary" item-start></ion-icon>
           Home
       </button>
       <!-- <ion-item-group> -->
-        <ion-item >      Locate</ion-item>
+        <ion-item class="locate-color">Locate</ion-item>
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-            <ion-icon [name]="p.icon" item-start></ion-icon>
+            <ion-icon [name]="p.icon" [ngStyle]="{'color':p.color}" item-start></ion-icon>
             {{p.title}}
           </button>
       <!-- </ion-item-group> -->
-      <ion-item >Driver</ion-item>
+      <ion-item class="locate-color">Driver</ion-item>
 
       <button *ngIf="stopped && active" menuClose ion-item  (click)="start()">
-          <ion-icon name="play" item-start></ion-icon>Start
+          <ion-icon name="ios-play-outline" color="primary" item-start></ion-icon>Start
       </button>
       <button *ngIf="started && active" menuClose ion-item  (click)="stop()">
-          <ion-icon name="pause" item-start></ion-icon>Stop
+          <ion-icon name="ios-pause-outline" color="primary" item-start></ion-icon>Stop
       </button>
 
       <button *ngIf="not_active" menuClose ion-item text-center (click)="openSignInPage()">

@@ -17,24 +17,24 @@
 <ion-content padding class="page-background">
   <ion-item class="select-div">
     <!-- <ion-label item-start>Select </ion-label> -->
-    <ion-select item-start [(ngModel)]="lines" multiple="false" interface="action-sheet" placeholder="Select Train" >
-      <ion-option>Colombo to Badulla</ion-option>
-      <ion-option>Peradeniya Junction to Matale</ion-option>
-      <ion-option>Ragama to Noor Nagar</ion-option>
-      <ion-option>Kelani Valley Railway Line</ion-option>
-      <ion-option>Northern Line</ion-option>
-      <ion-option>Mannar Line</ion-option>
-      <ion-option>Trincomalee Line</ion-option>
-      <ion-option>Batticaloa Line</ion-option>
-      <ion-option>Coastal Line</ion-option>
+    <ion-select class="my-select" item-start [(ngModel)]="selectedItem" multiple="false" interface="action-sheet" placeholder="Select Train Line" (ionChange)="onSelectLine($event)">
+      <ion-option value="1">Colombo to Badulla</ion-option>
+      <ion-option value="2">Peradeniya Junction to Matale</ion-option>
+      <ion-option value="3">Ragama to Noor Nagar</ion-option>
+      <ion-option value="4">Kelani Valley Railway Line</ion-option>
+      <ion-option value="5">Northern Line</ion-option>
+      <ion-option value="6">Mannar Line</ion-option>
+      <ion-option value="7">Trincomalee Line</ion-option>
+      <ion-option value="8">Batticaloa Line</ion-option>
+      <ion-option value="9">Coastal Line</ion-option>
     </ion-select>
   </ion-item>
 
-  <ion-scroll scrollY="true" id="train-list">
+  <ion-scroll scrollY="true" id="train-list" *ngIf="selectedItem">
       <ion-list>
-        <button ion-item *ngFor="let item of trains" (click)="trainTapped($event, item)">
+        <button ion-item *ngFor="let item of train_items" (click)="trainTapped($event, item)">
           <ion-icon [name]="item.icon" item-start></ion-icon>
-          {{item.busNo}}
+          {{item.trainNo}}
           <div class="item-note" item-end >
             {{item.name}}
           </div>

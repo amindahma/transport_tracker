@@ -17,9 +17,9 @@ import { MapPage } from '../map/map';
 })
 export class TrainPage {
 
-  lines: string;
+  train_list: any;
   selectedItem:any;
-  train_items: Array<{icon: string, busNo: string, name: string, route_id: string, username: string}>;
+  train_items: Array<{icon: string, trainNo: string, name: string, line_id: string, username: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     this.selectedItem = navParams.get('item');
@@ -27,6 +27,35 @@ export class TrainPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TrainPage');
+  }
+
+  onSelectLine(item) {
+    this.selectedItem = item;
+    this.apiProvider.getBusList("776").subscribe(res => {
+      console.log(res.json());
+      this.train_list=res.json();
+      this.train_items = [];
+      this.train_list.forEach(element => {
+        console.log(element);
+        var icon;
+        if(element.ownerType == ""){
+          if(element.ds= ""){
+            icon = ""
+          }
+        }else{
+          icon = "ios-bus-outline"
+        }
+        this.train_items.push({
+          icon: icon,
+          trainNo: element.busNo,
+          name: element.name,
+          line_id: element.route_id,
+          username: element.username
+        });
+      });
+    }, err => {
+    });
+
   }
 
   trainTapped(event, item) {

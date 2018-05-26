@@ -13,5 +13,20 @@ page-train {
         margin-top: 10px;
     }
 
+    #train-list {
+        height: 86%;
+    }
+
+    ion-list{      
+        .item-block{
+            border-radius: 20px;
+            // height: 100%;
+        }
+    } 
+
+    .my-select {
+        max-width: 100% !important;
+    }
+
     
 }

@@ -30,17 +30,17 @@ export class MyApp {
   username:any;
   password:any;
 
-  pages: Array<{title: string, component: any, icon: string}>;
+  pages: Array<{title: string, component: any, icon: string, color: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private nativeStorage: NativeStorage, private toastCtrl: ToastController, private apiProvider: ApiProvider, private backgroundMode: BackgroundMode) {
     this.initializeApp();
     
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Bus', component: ListPage, icon: "bus" },
-      { title: 'Train', component: TrainPage, icon: "train" },
-      { title: 'Staff Service', component: StaffPage, icon: "car" },
-      { title: 'School Service', component: SchoolPage, icon: "bus" }
+      { title: 'Bus', component: ListPage, icon: "ios-bus-outline", color: "orange" },
+      { title: 'Train', component: TrainPage, icon: "ios-train-outline", color: "orange" },
+      { title: 'Staff Service', component: StaffPage, icon: "ios-car-outline", color: "orange" },
+      { title: 'School Service', component: SchoolPage, icon: "ios-bus-outline", color: "orange" }
     ];
 
     this.checkUser();
