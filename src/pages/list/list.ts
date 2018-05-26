@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { MapPage } from '../map/map';
 import { ApiProvider } from '../../providers/api/api';
 import { elementAt } from 'rxjs/operator/elementAt';
+import { BusPage } from '../bus/bus';
 
 @Component({
   selector: 'page-list',
@@ -38,26 +39,9 @@ export class ListPage {
       this.items_original = this.items;
     }, err => {
     });
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    
-
-    // this.items = [];
-    // for (let i = 1; i < 11; i++) {
-    //   this.items.push({
-    //     title: 'Item ' + i,
-    //     note: 'This is item #' + i,
-    //     icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-    //   });
-    // }
   }
 
   itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    // this.navCtrl.push(ListPage, {
-    //   item: item
-    // });
     this.selectedItem = item;
     this.apiProvider.getBusList(item.id).subscribe(res => {
       console.log(res.json());
@@ -82,27 +66,12 @@ export class ListPage {
           username: element.username
         });
       });
-    }, err => {
-    });
-
-  }
-
-  busTapped(event, item) {
-    this.apiProvider.getCordinateList(item.route_id).subscribe(res => {
-      console.log(res.json());
-      // res.json().forEach(element => {
-      //   console.log(element);
-      //   var flightPlanCoordinates = [];
-      //   flightPlanCoordinates.push({
-          
-      //   });
-      // });
-      this.navCtrl.push(MapPage, {
-        flightPlanCoordinates: res.json(),
-        username: item.username
+      this.navCtrl.push(BusPage, {
+        bus_items: this.bus_items
       });
     }, err => {
     });
+
   }
 
   getItems(ev: any) {

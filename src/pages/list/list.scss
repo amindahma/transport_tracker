@@ -1,16 +1,33 @@
 page-list {
     #route-list {
-        height: 40%;
+        height: 88%;
     }
     #bus-list {
         height: 30%;
     }
     .search-bar {
-        border-radius: 30px !important;
         margin-bottom: 5px;
     }
     .bus-name {
         align-items: center;
         text-align: center;
     }
+
+    ion-searchbar{        
+        .searchbar-input-container{            
+            .searchbar-input{
+                border-radius: 20px;
+            }
+        }
+    }
+
+    ion-list{      
+        .item-block{
+            border-radius: 20px;
+            height: 90%;
+        }
+    }  
+         
+
+
 }

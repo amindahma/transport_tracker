@@ -12,6 +12,7 @@ import { SchoolPage } from '../pages/school/school';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { MqttConnection } from '../module/demo.module';
 import { ApiProvider } from '../providers/api/api';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,7 +32,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any, icon: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private nativeStorage: NativeStorage, private toastCtrl: ToastController, private apiProvider: ApiProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private nativeStorage: NativeStorage, private toastCtrl: ToastController, private apiProvider: ApiProvider, private backgroundMode: BackgroundMode) {
     this.initializeApp();
     
     // used for an example of ngFor and navigation
@@ -44,7 +45,7 @@ export class MyApp {
 
     this.checkUser();
     // if()
-
+    this.backgroundMode.enable();
   }
 
   checkUser(){

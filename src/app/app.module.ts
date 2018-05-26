@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { BusPage } from '../pages/bus/bus';
 import { MapPage } from '../pages/map/map';
 import { SignInPage } from '../pages/sign-in/sign-in';
 import { TrainPage } from '../pages/train/train';
@@ -20,13 +21,14 @@ import { UrlProvider } from '../providers/url/url';
 import { ApiProvider } from '../providers/api/api';
 import { HttpModule } from '@angular/http';
 import { NativeStorage } from '@ionic-native/native-storage';
-
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
+    BusPage,
     MapPage,
     SignInPage,
     TrainPage,
@@ -44,6 +46,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     MyApp,
     HomePage,
     ListPage,
+    BusPage,
     MapPage,
     SignInPage,
     TrainPage,
@@ -56,6 +59,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     MqttConnection,
     Geolocation,
     NativeStorage,
+    BackgroundMode,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UrlProvider,
     ApiProvider
