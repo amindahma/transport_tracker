@@ -11,7 +11,7 @@ import { elementAt } from 'rxjs/operator/elementAt';
 })
 export class BusPage {
 
-  // items_original:any;
+  // icon:string;
   bus_items: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -24,7 +24,8 @@ export class BusPage {
       console.log(res.json());
       this.navCtrl.push(MapPage, {
         flightPlanCoordinates: res.json(),
-        username: item.username
+        username: item.username,
+        marker_icon: item.busType
       });
     }, err => {
     });
