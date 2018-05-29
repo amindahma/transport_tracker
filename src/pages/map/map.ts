@@ -34,6 +34,7 @@ export class MapPage {
   lng: any;
   map:any;
   marker: any;
+  marker_icon: string;
   flightPlanCoordinates: any;
   username: String;
 
@@ -64,6 +65,7 @@ export class MapPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private backgroundMode: BackgroundMode) {
     this.flightPlanCoordinates = navParams.get('flightPlanCoordinates');
     this.username = navParams.get('username');
+    this.marker_icon = navParams.get('marker_icon');
     this.backgroundMode.enable();
     // this.backgroundMode.moveToBackground();
   }
@@ -120,9 +122,12 @@ export class MapPage {
   //     var map = new google.maps.Map(this.mapRef.nativeElement, options);
   //     this.map = map
       var loc = new google.maps.LatLng(0,0);
+      // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+      var image = 'assets/markers/bus/'+this.marker_icon+'.png';
       this.marker =  new google.maps.Marker({
-        loc,
-        map
+        position: loc,
+        map: map,
+        icon: image
       });
       // this.marker = marker;
   //     var infoWindow = new google.maps.InfoWindow({content: "You are Here!"});

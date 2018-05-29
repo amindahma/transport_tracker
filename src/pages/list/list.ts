@@ -17,7 +17,7 @@ export class ListPage {
   items_original:any;
   icons: string[];
   items: Array<{routeNo: string, name: string, id: string}>;
-  bus_items: Array<{icon: string, busNo: string, name: string, route_id: string, username: string}>;
+  bus_items: Array<{busType: string, icon: string, busNo: string, name: string, route_id: string, username: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -56,10 +56,11 @@ export class ListPage {
             icon = ""
           }
         }else{
-          icon = "bus"
+          icon = "ios-bus-outline"
         }
         this.bus_items.push({
           icon: icon,
+          busType: element.busType,
           busNo: element.busNo,
           name: element.name,
           route_id: element.route_id,
