@@ -132,9 +132,9 @@ export class MapPage {
     }else if(this.type == "train"){
       var image = 'assets/markers/train/train-red.png';
     }else if(this.type == "staff"){
-      var image = 'assets/markers/train/train-red.png';
+      var image = 'assets/markers/staff/staff-green.png';
     }else{
-      var image = 'assets/markers/train/train-red.png';
+      var image = 'assets/markers/bus/bus.png';
     }
     var my_image = 'assets/markers/user/user-black.png';
     var marker =  new google.maps.Marker({

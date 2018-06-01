@@ -26,6 +26,9 @@
       <button *ngIf="started && active" menuClose ion-item  (click)="stop()">
           <ion-icon name="ios-pause-outline" color="primary" item-start></ion-icon>Stop
       </button>
+      <button *ngIf="started && active" menuClose ion-item  (click)="openSettingsPage()">
+          <ion-icon name="ios-settings-outline" color="secondary" item-start></ion-icon>Settings
+      </button>
 
       <button *ngIf="not_active" menuClose ion-item text-center (click)="openSignInPage()">
         Log In

@@ -58,5 +58,17 @@ export class ApiProvider {
     body.append('password',password);
     return this.http.post(url,body);  
   }
+
+  changePassord(username, old_password, new_password) {
+    // let access_token=localStorage.getItem('access_token');
+    let url = UrlProvider.IP_ADDRESS + UrlProvider.CHANGE_PASSWORD ;
+    let body = new FormData();
+    body.append('username',username);
+    body.append('old_password',old_password);
+    body.append('new_password',new_password);
+    return this.http.post(url,body);  
+  }
+
+
  
 }

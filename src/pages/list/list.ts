@@ -6,6 +6,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { elementAt } from 'rxjs/operator/elementAt';
 import { BusPage } from '../bus/bus';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { connect } from 'mqtt';
 
 @Component({
   selector: 'page-list',
@@ -18,7 +19,7 @@ export class ListPage {
   items_original:any;
   icons: string[];
   items: Array<{routeNo: string, name: string, id: string}>;
-  bus_items: Array<{busType: string, icon: string, busNo: string, name: string, route_id: string, username: string, ownerType: string, telNo: string}>;
+  bus_items: Array<{busType: string, icon: string, busNo: string, name: string, route_id: string, username: string, ownerType: string, telNo: string, connected: boolean}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private backgroundMode: BackgroundMode) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -68,7 +69,8 @@ export class ListPage {
           route_id: element.route_id,
           username: element.username,
           ownerType: element.ownerType,
-          telNo:element.telNo
+          telNo: element.telNo,
+          connected: element.connected
         });
       });
       this.navCtrl.push(BusPage, {

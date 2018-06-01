@@ -22,5 +22,6 @@ export class UrlProvider {
   static TRAIN_LIST="api/train/list";
   static CORDINATE_LIST="api/coordinate/list";
   static AUTHENTICATE="driver/api/login";
+  static CHANGE_PASSWORD="driver/api/changePassword";
 
 }
