@@ -14,5 +14,13 @@
 
 
 <ion-content padding class="page-background">
-  <div #map id="my-map"></div> 
+  <div #map id="my-map"></div>
+  <ion-fab top right>
+    <button ion-fab mini color="light"><ion-icon name="locate" color="primary"></ion-icon></button>
+    <ion-fab-list side="down">
+      <button ion-fab (click)="locateTransport()"><ion-icon name="bus" color="grey"></ion-icon></button>
+      <button ion-fab (click)="locateUser()"><ion-icon name="man" color="grey"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+ 
 </ion-content>

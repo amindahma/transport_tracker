@@ -278,4 +278,14 @@ export class MapPage {
     }
   } 
 
+  locateUser(){
+    this.map.setZoom(13);      // This will trigger a zoom_changed on the map
+    this.map.setCenter(this.my_marker.getPosition());
+  }
+
+  locateTransport(){
+    this.map.setZoom(13);      // This will trigger a zoom_changed on the map
+    this.map.setCenter(this.marker.getPosition());
+  }
+
 }
