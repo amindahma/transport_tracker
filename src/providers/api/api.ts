@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UrlProvider } from '../url/url';
 import { Http,RequestOptions,Response,Headers } from '@angular/http';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 /*
   Generated class for the ApiProvider provider.
@@ -12,8 +13,9 @@ import { Http,RequestOptions,Response,Headers } from '@angular/http';
 @Injectable()
 export class ApiProvider {
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private backgroundMode: BackgroundMode) {
     console.log('Hello ApiProvider Provider');
+    this.backgroundMode.enable();
   }
 
   
@@ -30,6 +32,14 @@ export class ApiProvider {
     let url = UrlProvider.IP_ADDRESS + UrlProvider.BUS_LIST ;
     let body = new FormData();
     body.append('route_id',route);
+    return this.http.post(url,body);  
+  }
+
+  getTrainList(line) {
+    // let access_token=localStorage.getItem('access_token');
+    let url = UrlProvider.IP_ADDRESS + UrlProvider.TRAIN_LIST ;
+    let body = new FormData();
+    body.append('line',line);
     return this.http.post(url,body);  
   }
 

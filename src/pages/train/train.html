@@ -34,7 +34,7 @@
       <ion-list>
         <button ion-item *ngFor="let item of train_items" (click)="trainTapped($event, item)">
           <ion-icon [name]="item.icon" item-start></ion-icon>
-          {{item.trainNo}}
+          <!-- {{item.}} -->
           <div class="item-note" item-end >
             {{item.name}}
           </div>

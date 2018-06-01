@@ -5,6 +5,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { ToastController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { MyApp } from '../../app/app.component';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 /**
  * Generated class for the SignInPage page.
@@ -24,8 +25,9 @@ export class SignInPage {
   password = '';
   myApp: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private nativeStorage: NativeStorage, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private nativeStorage: NativeStorage, private toastCtrl: ToastController, private backgroundMode: BackgroundMode) {
     this.myApp = navParams.get('myApp');
+    this.backgroundMode.enable();
   }
 
   ionViewDidLoad() {

@@ -46,6 +46,7 @@ export class MyApp {
     this.checkUser();
     // if()
     this.backgroundMode.enable();
+    this.backgroundMode.disableWebViewOptimizations();
   }
 
   checkUser(){
@@ -96,6 +97,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.openHomePage()
     });
   }
 

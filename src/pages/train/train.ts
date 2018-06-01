@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { MapPage } from '../map/map';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 /**
  * Generated class for the TrainPage page.
@@ -19,10 +20,11 @@ export class TrainPage {
 
   train_list: any;
   selectedItem:any;
-  train_items: Array<{icon: string, trainNo: string, name: string, line_id: string, username: string}>;
+  train_items: Array<{icon: string, name: string, line_id: string, endStation: string, endTime: string, startStation: string, startTime: string, username: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private backgroundMode: BackgroundMode) {
     this.selectedItem = navParams.get('item');
+    this.backgroundMode.enable();
   }
 
   ionViewDidLoad() {
@@ -31,7 +33,8 @@ export class TrainPage {
 
   onSelectLine(item) {
     this.selectedItem = item;
-    this.apiProvider.getBusList("776").subscribe(res => {
+    // console.log(item);
+    this.apiProvider.getTrainList(item).subscribe(res => {
       console.log(res.json());
       this.train_list=res.json();
       this.train_items = [];
@@ -47,9 +50,12 @@ export class TrainPage {
         }
         this.train_items.push({
           icon: icon,
-          trainNo: element.busNo,
           name: element.name,
-          line_id: element.route_id,
+          line_id: this.selectedItem,
+          endStation: element.endStation,
+          endTime: element.endTime,
+          startStation: element.startStation,
+          startTime: element.startTime,
           username: element.username
         });
       });
@@ -59,8 +65,8 @@ export class TrainPage {
   }
 
   trainTapped(event, item) {
-    this.apiProvider.getCordinateList(item.route_id).subscribe(res => {
-      console.log(res.json());
+    // this.apiProvider.getCordinateList(item.route_id).subscribe(res => {
+    //   console.log(res.json());
       // res.json().forEach(element => {
       //   console.log(element);
       //   var flightPlanCoordinates = [];
@@ -68,11 +74,13 @@ export class TrainPage {
           
       //   });
       // });
-      this.navCtrl.push(MapPage, {
-        flightPlanCoordinates: res.json(),
-        username: item.username
-      });
-    }, err => {
+      
+    // }, err => {
+    // });
+    this.navCtrl.push(MapPage, {
+      // flightPlanCoordinates: res.json(),
+      type: "train",
+      item: item
     });
   }
 

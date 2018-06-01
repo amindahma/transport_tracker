@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { MapPage } from '../map/map';
 import { ApiProvider } from '../../providers/api/api';
 import { elementAt } from 'rxjs/operator/elementAt';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 @Component({
   selector: 'page-bus',
@@ -13,10 +14,11 @@ export class BusPage {
 
   // icon:string;
   bus_items: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private backgroundMode: BackgroundMode) {
     // If we navigated to this page, we will have an item available as a nav param
     this.bus_items = navParams.get('bus_items');
     // Let's populate this page with some filler content for funzies
+    this.backgroundMode.enable();
   }
 
   busTapped(event, item) {
@@ -24,8 +26,8 @@ export class BusPage {
       console.log(res.json());
       this.navCtrl.push(MapPage, {
         flightPlanCoordinates: res.json(),
-        username: item.username,
-        marker_icon: item.busType
+        item: item,
+        type: "bus"
       });
     }, err => {
     });

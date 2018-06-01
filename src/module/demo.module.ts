@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { Geolocation } from '@ionic-native/geolocation';
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+import { BackgroundMode } from '@ionic-native/background-mode';
 @Injectable()
 
 
@@ -22,6 +24,8 @@ export class MqttConnection {
     line:number=1;
     geo:any;
     topic: string;
+    backgroundMode:any;
+    backgroundGeolocation:any;
 
     
 
@@ -37,17 +41,46 @@ export class MqttConnection {
     
 
     this.geo =new Geolocation();
-
+    this.backgroundGeolocation = new  BackgroundGeolocation();
     this.geo.getCurrentPosition().then( data => {
       this.sendMessage(data.coords.latitude,data.coords.longitude);
-      console.log(data)
+      console.log(data);
+      console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111");
     }).catch( err => console.log(err));
     
     let watch = this.geo.watchPosition();
     watch.subscribe((data) => {
-      console.log(data)
+      console.log(data);
+      console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111");
       this.sendMessage(data.coords.latitude,data.coords.longitude);
     });
+    this.backgroundMode = new  BackgroundMode();
+    this.backgroundMode.enable();
+    this.backgroundMode.disableWebViewOptimizations();
+
+    const config: BackgroundGeolocationConfig = {
+      desiredAccuracy: 10,
+      stationaryRadius: 20,
+      distanceFilter: 30,
+      debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+      stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+      interval: 3000
+    };
+
+    this.backgroundGeolocation.configure(config).subscribe((location: BackgroundGeolocationResponse) => {
+
+      console.log(location);
+      this.sendMessage(location.latitude,location.longitude);
+      console.log("2222222222222222222222222222222222222222222222222222222222222222222222222222");
+    // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+    // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+    // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+    // this.backgroundGeolocation.finish(); // FOR IOS ONLY
+
+    });
+
+    // start recording location
+    this.backgroundGeolocation.start();
 
   }
 
@@ -96,5 +129,6 @@ export class MqttConnection {
 
   stop(){
     this.client.disconnect();
+    this.backgroundGeolocation.stop();
   }
 }
