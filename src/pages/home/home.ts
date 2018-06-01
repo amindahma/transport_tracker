@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { MqttConnection } from '../../module/demo.module';
 import { Subscription } from "rxjs";
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 declare var google:any;
 
@@ -20,8 +21,8 @@ export class HomePage {
 
   @ViewChild('map') mapRef:ElementRef;
   
-  constructor(public navCtrl: NavController, public geo: Geolocation) {
-    
+  constructor(public navCtrl: NavController, public geo: Geolocation, private backgroundMode: BackgroundMode) {
+    this.backgroundMode.enable();
   }
 
   ionViewDidLoad() {
@@ -48,7 +49,7 @@ export class HomePage {
       let options = {
         center:location,
         zoom:10,
-        streetViewControl:false,
+        streetViewControl:false, 
         mapTypeId:'roadmap'
       };
       var map = new google.maps.Map(this.mapRef.nativeElement, options);

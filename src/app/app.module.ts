@@ -22,6 +22,8 @@ import { ApiProvider } from '../providers/api/api';
 import { HttpModule } from '@angular/http';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
+import { SettingsPage } from '../pages/settings/settings';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     SignInPage,
     TrainPage,
     StaffPage,
-    SchoolPage
+    SchoolPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -51,13 +54,15 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     SignInPage,
     TrainPage,
     StaffPage,
-    SchoolPage
+    SchoolPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     MqttConnection,
     Geolocation,
+    BackgroundGeolocation,
     NativeStorage,
     BackgroundMode,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

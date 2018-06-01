@@ -13,6 +13,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { MqttConnection } from '../module/demo.module';
 import { ApiProvider } from '../providers/api/api';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -37,15 +38,16 @@ export class MyApp {
     
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Bus', component: ListPage, icon: "ios-bus-outline", color: "orange" },
-      { title: 'Train', component: TrainPage, icon: "ios-train-outline", color: "orange" },
-      { title: 'Staff Service', component: StaffPage, icon: "ios-car-outline", color: "orange" },
-      { title: 'School Service', component: SchoolPage, icon: "ios-bus-outline", color: "orange" }
+      { title: 'Bus', component: ListPage, icon: "ios-bus-outline", color: "grey" },
+      { title: 'Train', component: TrainPage, icon: "ios-train-outline", color: "black" },
+      { title: 'Staff Service', component: StaffPage, icon: "ios-car-outline", color: "grey" },
+      { title: 'School Service', component: SchoolPage, icon: "ios-bus-outline", color: "black" }
     ];
 
     this.checkUser();
     // if()
     this.backgroundMode.enable();
+    this.backgroundMode.disableWebViewOptimizations();
   }
 
   checkUser(){
@@ -80,6 +82,31 @@ export class MyApp {
     this.password = data.password;
   }
 
+  setPassword(password){
+    this.password = password;
+    this.nativeStorage.getItem('user')
+        .then(
+          data => this.updateData(data),
+          error => console.error(error)
+        );
+  }
+
+  updateData(result){
+    this.nativeStorage.setItem('user', {
+      status: result.status, 
+      busId: result.busId,
+      busNo: result.busNo,
+      routeName: result.routeName,
+      routeNo: result.routeNo,
+      route_id: result.route_id,
+      username: result.username,
+      password: this.password,
+    }).then(
+      () => console.log("Signed in successfully"),
+      error => console.error('Error storing item', error)
+    );
+  }
+
   startMqtt(){
     console.log(this.username);
     console.log(this.password);
@@ -96,6 +123,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.openHomePage()
     });
   }
 
@@ -110,6 +138,14 @@ export class MyApp {
   openSignInPage() {
     this.nav.setRoot(SignInPage, {
       myApp: this
+    });
+  }
+
+  openSettingsPage() {
+    this.nav.setRoot(SettingsPage, {
+      myApp: this,
+      username: this.username,
+      password: this.password
     });
   }
 

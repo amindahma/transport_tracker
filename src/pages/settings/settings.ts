@@ -8,68 +8,59 @@ import { MyApp } from '../../app/app.component';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
 /**
- * Generated class for the SignInPage page.
+ * Generated class for the SettingsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
-
 @Component({
-  selector: 'page-sign-in',
-  templateUrl: 'sign-in.html',
+  selector: 'page-settings',
+  templateUrl: 'settings.html',
 })
-export class SignInPage {
+export class SettingsPage {
 
   username = '';
   password = '';
+  old_password = "";
+  new_password = '';
   myApp: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, private nativeStorage: NativeStorage, private toastCtrl: ToastController, private backgroundMode: BackgroundMode) {
     this.myApp = navParams.get('myApp');
+    this.username = navParams.get('username');
+    this.password = navParams.get('password');
     this.backgroundMode.enable();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignInPage');
+    console.log('ionViewDidLoad SettingsPage');
   }
 
-  clickLogin(){
-    this.apiProvider.authenticate(this.username, this.password).subscribe(res => {
-      console.log(res.json());
-      var result = res.json();
-      if(result.status == 200){
-        
-        // this.myApp.startMqtt(result.username);
-        this.nativeStorage.setItem('user', {
-          status: result.status, 
-          busId: result.busId,
-          busNo: result.busNo,
-          routeName: result.routeName,
-          routeNo: result.routeNo,
-          route_id: result.route_id,
-          username: result.username,
-          password: this.password,
-        })
-          .then(
-            () => this.presentToast("Signed in successfully", HomePage, "toast-green"),
-            error => console.error('Error storing item', error)
-          );
-
-        this.nativeStorage.getItem('user')
-          .then(
-            data => console.log(data.status),
-            error => console.error(error)
-          );
-      }else{
-        this.presentOnlyToast("username or password is incorrect", "toast-red")
-      }
-    }, err => {
-    });
+  clickChangePassword(){
+    console.log("old password: "+this.old_password);
+    console.log("password: "+this.password);
+    if(this.old_password == this.new_password){
+      this.presentOnlyToast("New passord is same as the Old Password", "toast-red")
+    }else if(this.old_password != this.password){
+      this.presentOnlyToast("Passord is incorrect", "toast-red")
+    }else{
+      this.apiProvider.changePassord(this.username, this.password, this.new_password).subscribe(res => {
+        console.log(res.json());
+        var result = res.json();
+        if(result.status == 200){
+          this.myApp.setPassword(this.new_password);
+          this.presentToast("Password updated successfully !", HomePage, "toast-green")
+        }else{
+          this.presentOnlyToast("Network Error", "toast-red")
+        }
+      }, err => {
+      });
+    }
   }
 
   presentToast(msg, page,css) {
-    this.myApp.setActive(200);
+    // this.myApp.setActive(200);
     this.navCtrl.setRoot(page, {
     });
 
@@ -102,6 +93,5 @@ export class SignInPage {
   
     toast.present();
   }
-
 
 }

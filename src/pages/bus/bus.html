@@ -9,17 +9,19 @@
 
 <ion-content padding class="page-background">
   <!-- <ion-searchbar class="search-bar" placeholder="Search Route" showCancelButton=true animated=true (ionInput)="getItems($event)"></ion-searchbar> -->
-  
   <!-- <h5 *ngIf="selectedItem" padding>Select bus from route <b>{{selectedItem.title}}</b></h5> -->
   <ion-scroll scrollY="true" id="bus-list">
     <ion-list>
-      <button ion-item *ngFor="let item of bus_items" (click)="busTapped($event, item)">
-        <ion-icon [name]="item.icon" item-start></ion-icon>
-        {{item.busNo}}
-        <div class="item-note" item-end >
-          {{item.busType}}
-        </div>
-      </button>
+        <!-- [disabled]="tagList.length > 0" -->
+      <div *ngFor="let item of bus_items">
+        <button ion-item [disabled]="!item.connected" (click)="busTapped($event, item)">
+          <ion-icon [name]="item.icon" item-start></ion-icon>
+            {{item.busNo}}
+          <div class="item-note" item-end >
+            {{item.busType}}
+          </div>
+        </button>
+      </div>
     </ion-list>
   </ion-scroll>
 </ion-content>
